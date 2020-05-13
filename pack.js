@@ -22,7 +22,7 @@ exec ('npm i -D html-loader html-webpack-plugin',
   });
 // CSS
 // TS
-exec ('npm i -D typescript ts-loader',
+exec ('npm i -D typescript',
 (error, stdout, stderr) => {
     if (error) {
       console.error(`exec error: ${error}`);

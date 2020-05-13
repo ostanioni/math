@@ -1,10 +1,16 @@
 {
+  "git.ignoreLimitWarning": true,
+  "workbench.iconTheme": "vscode-great-icons",
   "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
-  "window.zoomLevel": 2,
+  "terminal.integrated.fontSize": 19,
+  "window.zoomLevel": 1,
+  "emmet.showAbbreviationSuggestions": true,
+  "emmet.showExpandedAbbreviation": "always",
   "typescript.tsdk": "./node_modules/typescript/lib",
   "editor.detectIndentation": false,
   "editor.multiCursorModifier": "ctrlCmd",
   "editor.tabSize": 2,
+  "files.autoSaveDelay": 100000,
   "files.exclude": {
       "**/*.js": { "when": "$(basename).ts" },
      "**/**.js": { "when": "$(basename).tsx" },
