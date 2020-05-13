@@ -1,0 +1,1 @@
+npm i -D webpack webpack-bundle-analyzer webpack-cli webpack-dev-server webpack-merge
