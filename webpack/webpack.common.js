@@ -6,7 +6,7 @@ const BABEL = { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
 /***___TSX_LOADER___***/
 // const TSX = { test: /\.tsx$/, loader: "awesome-typescript-loader" };
 /***___TS_LOADER___***/
-// const TS = { test: /\.tsx?$/, loader: "ts-loader", exclude: /node_modules/ };
+const TS = { test: /\.ts$/, loader: "ts-loader", exclude: /node_modules/ };
 /***___IMAGES_LOADER___***/
 const IMAGES = { test: /\.(png|svg|jpg|gif)$/,  use: [ { loader: 'file-loader', /*exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],*/ options: { name(file) { if (process.env.NODE_ENV === 'development') { return 'imgs/[path][name].[ext]'; } return 'imgs/[hash].[ext]';},},},]};
 /***___WORKER_LOADER___***/
@@ -56,7 +56,6 @@ module.exports = {
   resolve: {
     extensions: [ '.jsx', '.js', '.json' ],
     alias: {
-     'react-dom': '@hot-loader/react-dom',
       pages:      `${CONTEXT}/src/pages`,
       layouts:    `${CONTEXT}/src/layouts`,
       components: `${CONTEXT}/src/components`,
@@ -77,7 +76,7 @@ module.exports = {
     },
   },
   module: {
-    rules: [ BABEL, FONT, IMAGES, MD, RAW]
+    rules: [ TS, BABEL, FONT, IMAGES, MD, RAW]
   },
   plugins: [
     new HtmlWebpackPlugin({
