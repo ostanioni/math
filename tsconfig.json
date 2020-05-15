@@ -5,6 +5,8 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
+    "noUnusedParameters":true,
+    "noUnusedLocals": true,
     "resolveJsonModule": true,
     "allowJs": false,
     "skipLibCheck": true,
