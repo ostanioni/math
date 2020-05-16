@@ -4,8 +4,6 @@ public
 node_modules
 .vscode
 .DS_Store
-node_modules
-dist
 ./**/*.ts
 
 # local env files

@@ -1,6 +1,19 @@
 {
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
-  "extends": ["plugin:@typescript-eslint/recommended"],
-  "processor": "a-plugin/a-processor"
+  "processor": "@typescript-eslint-plugin/@typescript-eslint-processor",
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2020, 
+    "sourceType": "module"
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  }
 }
