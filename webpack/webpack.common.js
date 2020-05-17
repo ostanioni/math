@@ -34,8 +34,8 @@ const RAW = { test: /\.txt$/i, use: 'raw-loader'};
   
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 /*_____________CONTEXT_______________ */
 const CONTEXT = path.resolve(__dirname, '../');
@@ -79,7 +79,7 @@ module.exports = {
     rules: [ TS, BABEL, FONT, IMAGES, MD, RAW]
   },
   plugins: [
-    new HtmlWebpackPlugin({
+    new HtmlPlugin({
       inject: true,
       template: `${CONTEXT}/public/index.html`,
       minify: {
@@ -95,14 +95,13 @@ module.exports = {
         minifyURLs: true,
       }
     }),
-    new CopyWebpackPlugin(
-      [
+    new CopyPlugin({
+      patterns:[
         { 
           from: 'public/imgs',
           to: '../dist/imgs',  
           // [name].[ext]',
           toType: 'dir',
-          ignore: [ '*.js' ],
           force: true,
           context: `${CONTEXT}`
         },
@@ -122,8 +121,10 @@ module.exports = {
           force: true,
           context: `${CONTEXT}`
         },
-      ], 
-      { debug: 'info' }
-    )
+      ],
+      options: {
+        concurrency: 100,
+      }
+    })
   ]
 };
