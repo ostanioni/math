@@ -5,8 +5,7 @@
 const BABEL = { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" };
 /***___TSX_LOADER___***/
 // const TSX = { test: /\.tsx$/, loader: "awesome-typescript-loader" };
-/***___TS_LOADER___***/
-const TS = { test: /\.ts$/, loader: "ts-loader", exclude: /node_modules/ };
+
 /***___IMAGES_LOADER___***/
 const IMAGES = { test: /\.(png|svg|jpg|gif)$/,  use: [ { loader: 'file-loader', /*exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],*/ options: { name(file) { if (process.env.NODE_ENV === 'development') { return 'imgs/[path][name].[ext]'; } return 'imgs/[hash].[ext]';},},},]};
 /***___WORKER_LOADER___***/

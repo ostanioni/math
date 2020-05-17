@@ -1,5 +1,6 @@
 /* eslint-disable */
 /*tslint:disabled*/
+
 const merge   = require('webpack-merge');
 const common  = require('./webpack.common.js');
 const webpack = require('webpack');
@@ -29,6 +30,7 @@ const SCSS_SYNTAX = {
     },
   ]
 };
+
 /***___SCSS_SOURCE_MAP__ ***/
 const SCSS_SOURCE_MAP = {
   test: /\.scss$/,
@@ -40,11 +42,13 @@ const SCSS_SOURCE_MAP = {
   ],
   sideEffects: true,
 }
+
 /***___CSS_LOADER___***/
 const CSS_SOURCE_MAP = {
   test: /\.css$/,
   use: [
     { loader: 'style-loader',   options: { sourceMap: true, } },
+    'astroturf/css-loader',
     { loader: 'css-loader',     options: { sourceMap: true, importLoaders: 1, } },
     'postcss-loader',
   ],
