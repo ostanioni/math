@@ -14,7 +14,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "sourceMap": false,
-    "noEmit": true,
+    "noEmit": false,
     "charset": "utf8",
     "locale": "ru",
     "strict": true,

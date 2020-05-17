@@ -41,7 +41,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const CONTEXT = path.resolve(__dirname, '../');
 const ASSET_PATH = process.env.ASSET_PATH || '/';
 /* __________ENTRY__POINT_____________*/
-const $ENTRY = './src/index.js'
+const $ENTRY = './src/index.ts'
 
 module.exports = {
   context: CONTEXT,
@@ -54,7 +54,7 @@ module.exports = {
     publicPath: ASSET_PATH,
   },
   resolve: {
-    extensions: [ '.jsx', '.js', '.json' ],
+    extensions: [ '.jsx', '.js', '.json','ts' ],
     alias: {
       pages:      `${CONTEXT}/src/pages`,
       layouts:    `${CONTEXT}/src/layouts`,

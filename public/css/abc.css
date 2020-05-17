@@ -1,0 +1,24 @@
+body {
+  margin:0;
+  padding:0;
+}
+.cnvsW {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #f00; }
+.cnvs {
+  width: 1020px; 
+  height: 1020px;
+  border: 1px solid #0f0; }
+  .fade-enter {
+    opacity: 0;
+  }
+  .fade-enter.fade-enter-active {
+    opacity: 1;
+    transition: opacity 250ms ease-in;
+  }
