@@ -1,10 +1,10 @@
 /* eslint-disable */ 
 /*tslint:disabled*/
-const path = require('path');
-const webpack = require('webpack');
-const HtmlPlugin = require('html-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+import path from 'path';
+import webpack from 'webpack';
+import HtmlPlugin from 'html-webpack-plugin';
+import CopyPlugin from 'copy-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 /*_____________COMMON_VARIABLES_______________ */
 const devMode = process.env.NODE_ENV !== 'production'
 const $SOURCE_MAP = devMode ? true : false
@@ -58,7 +58,7 @@ const $STYLE_LOADER = { loader: 'style-loader', options: { sourceMap: true, } }
 const $MINI_CSS_LOADER = { 
   loader: MiniCssExtractPlugin.loader, 
   options: {
-    // publicPath: './dist',
+    publicPath: `${CONTEXT}/dist`,
     hmr: devMode,
   } 
 }
@@ -103,7 +103,7 @@ module.exports = {
   output: {
     filename: '[hash].js',
     path: `${CONTEXT}/dist`,
-    publicPath: ASSET_PATH,
+    publicPath: `${CONTEXT}`,
   },
   resolve: {
     extensions: [ 'ts', '.js', '.json' ],
