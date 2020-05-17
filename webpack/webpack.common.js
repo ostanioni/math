@@ -38,23 +38,43 @@ const RAW = { test: /\.txt$/i, use: 'raw-loader'};
 // const HTML = { test: /\.(html)$/, use: { loader: 'html-loader', options: { attrs: [':data-src'] } }};
 /***__ESLINT_LOADER___***/
 // const ESLINT = { test: /\.(js|mjs|jsx)$/, enforce: 'pre', use: [ { options: { formatter: require.resolve('react-dev-utils/eslintFormatter'), eslintPath: require.resolve('eslint'), }, loader: require.resolve('eslint-loader'), }, ] }; //, include: paths.appSrc };
-/**___SVG_SNAP____****/
-// SVG_SNAP = {
-//   test: require.resolve('snapsvg/dist/snap.svg.js'),
-//   use: 'imports-loader?this=>window,fix=>module.exports=0',
-// }
-/***___SCSS_SOURCE_MAP__ ***/
+
+/***___SCSS_SYNTAX___ ***/
+const SCSS_SYNTAX = {
+  enforce: "pre",
+  test: /\.s[ac]ss$/i,
+  exclude: /node_modules/,
+  use: [
+    { loader: 'postcss-loader',
+      options: { 
+        parser: 'postcss-scss', 
+        syntax: 'postcss-scss',
+      } 
+    },
+  ]
+};
+/***___SCSS_CSS_PARAMETERS__ ***/
 const $STYLE_LOADER = { loader: 'style-loader', options: { sourceMap: true, } }
 const $MINI_CSS_LOADER = MiniCssExtractPlugin.loader
 const $STYLE_LOADER_OR_MINI_CSS_LOADER = devMode ? $STYLE_LOADER : $MINI_CSS_LOADER
-
-const SCSS = {
-  test: /\.s[ac]ss$/,
+/***___SCSS_CSS___ ***/
+const SCSS_CSS = {
+  test: /\.((c|sa|sc)ss)$/i,
   use: [
     $STYLE_LOADER_OR_MINI_CSS_LOADER,
-    { loader: 'css-loader', options: { sourceMap: $SOURCE_MAP, importLoaders: 2, } },
+    { 
+      // Run `postcss-loader` on each CSS `@import`, do not forget that `sass-loader` compile non CSS `@import`'s into a single file
+      // If you need run `sass-loader` and `postcss-loader` on each CSS `@import` please set it to `2`
+      loader: 'css-loader', 
+      options: { 
+        sourceMap: $SOURCE_MAP, 
+        importLoaders: 2,
+      } 
+    },
     'postcss-loader',
-    { loader: 'sass-loader',    
+    { 
+      test: /\.s[ac]ss$/i,
+      loader: 'sass-loader',    
         options: { 
           sourceMap: $SOURCE_MAP,
           implementation: require('sass'), 
@@ -65,16 +85,6 @@ const SCSS = {
           }
         } 
     },
-  ],
-  sideEffects: true,
-}
-/***___CSS_LOADER___***/
-const CSS = {
-  test: /\.css$/,
-  use: [
-    $STYLE_LOADER_OR_MINI_CSS_LOADER,
-    { loader: 'css-loader',     options: { sourceMap: $SOURCE_MAP, importLoaders: 1, } },
-    'postcss-loader',
   ],
   sideEffects: true,
 }
@@ -107,12 +117,11 @@ module.exports = {
       workers:    `${CONTEXT}/public/workers`,
       css:        `${CONTEXT}/public/css`,
       imgs:       `${CONTEXT}/public/imgs`,
-      snapsvg:    'snapsvg/dist/snap.svg.js',
       themes:     `${CONTEXT}/src/themes`,
     },
   },
   module: {
-    rules: [ TS, BABEL, FONT, IMAGES, MD, RAW, SCSS, CSS]
+    rules: [ TS, BABEL, FONT, IMAGES, MD, RAW, SCSS_CSS]
   },
   plugins: [
     new MiniCssExtractPlugin({

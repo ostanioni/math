@@ -10,29 +10,11 @@ const CONTEXT = path.resolve(__dirname, '../');
 const SRC = `${CONTEXT}/src`
 
 /***___SOURCE_MAP____***/
-// const JS_SOURCE_MAP = { enforce: "pre", test: /\.js$/, loader: "source-map-loader" };
 const JS_SOURCE_MAP = {
   enforce: 'pre',
   test: /\.js$/,
-      loader: "source-map-loader"
+  loader: "source-map-loader"
 }
-/***___SCSS_SYNTAX___ ***/
-const SCSS_SYNTAX = {
-  enforce: "pre",
-  test: /\.s[ac]ss$/,
-  exclude: /node_modules/,
-  use: [
-    { loader: 'postcss-loader',
-      options: { 
-        parser: 'postcss-scss', 
-        syntax: 'postcss-scss',
-      } 
-    },
-  ]
-};
-
-
-
 
 
 module.exports = merge(common, {
@@ -46,7 +28,7 @@ module.exports = merge(common, {
   },
   devtool: 'cheap-module-source-map', // 'source-map',
   module: {
-    rules: [ JS_SOURCE_MAP, SCSS_SYNTAX, CSS_SOURCE_MAP ]
+    rules: [ JS_SOURCE_MAP, SCSS_SYNTAX ]
   },
   optimization: {
     minimize: false,
