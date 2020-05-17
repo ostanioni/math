@@ -58,7 +58,7 @@ const $STYLE_LOADER = { loader: 'style-loader', options: { sourceMap: true, } }
 const $MINI_CSS_LOADER = { 
   loader: MiniCssExtractPlugin.loader, 
   options: {
-    publicPath: './dist',
+    // publicPath: './dist',
     hmr: devMode,
   } 
 }
