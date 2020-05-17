@@ -55,7 +55,13 @@ const SCSS_SYNTAX = {
 };
 /***___SCSS_CSS_PARAMETERS__ ***/
 const $STYLE_LOADER = { loader: 'style-loader', options: { sourceMap: true, } }
-const $MINI_CSS_LOADER = MiniCssExtractPlugin.loader
+const $MINI_CSS_LOADER = { 
+  loader: MiniCssExtractPlugin.loader, 
+  options: {
+    publicPath: './dist',
+    hmr: devMode,
+  } 
+}
 const $STYLE_LOADER_OR_MINI_CSS_LOADER = devMode ? $STYLE_LOADER : $MINI_CSS_LOADER
 /***___SCSS_CSS___ ***/
 const SCSS_CSS = {
@@ -100,7 +106,7 @@ module.exports = {
     publicPath: ASSET_PATH,
   },
   resolve: {
-    extensions: [ '.jsx', '.js', '.json','ts' ],
+    extensions: [ 'ts', '.js', '.json' ],
     alias: {
       pages:      `${CONTEXT}/src/pages`,
       layouts:    `${CONTEXT}/src/layouts`,
@@ -108,7 +114,6 @@ module.exports = {
       resources:  `${CONTEXT}/src/resources`,
       tables:     `${CONTEXT}/src/tables`,
       stores:     `${CONTEXT}/src/stores`,
-      styled:     `${CONTEXT}/src/styled`,
       ts:         `${CONTEXT}/src/typescript`,
       algs:       `${CONTEXT}/src/typescript/algorithms`,
       webgl:      `${CONTEXT}/src/webgl`,
@@ -125,8 +130,12 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: '[hash].css', // [name]
-      chunkFilename: '[id].css',
+      cssProcessorOptions: {
+        parser: safePostCssParser,
+        map: $SOURCE_MAP,
+      },
+      filename: 'css/[contenthash].css', // [name]
+      chunkFilename: 'css/[contenthash].[id].css',
     }),
     new HtmlPlugin({
       inject: true,

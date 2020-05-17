@@ -10,31 +10,7 @@ const CompressionPlugin = require('compression-webpack-plugin');
 const {GenerateSW} = require('workbox-webpack-plugin');
 const path = require('path');
 
-const $SOURCE_MAP = false
 const CONTEXT = path.resolve(__dirname, '../');
-
-/***___SCSS_LOADER_WITHOUT_SOURCE_MAP__ ***/
-const SCSS = {
-  test: /\.s[ac]ss$/,
-  use: [
-    MiniCssExtractPlugin.loader,
-    { loader: 'css-loader',     options: { sourceMap: $SOURCE_MAP, importLoaders: 2, } },
-    'postcss-loader',
-    { loader: 'sass-loader',    options: { sourceMap: $SOURCE_MAP, importLoaders: 0, }, }
-  ],
-  sideEffects: true,
-}
-
-/***___CSS_LOADER_WITHOUT_SOURCE_MAP___***/
-const CSS = {
-  test: /\.css$/,
-  use: [
-     MiniCssExtractPlugin.loader,
-    { loader: 'css-loader', options: { sourceMap: $SOURCE_MAP, importLoaders: 1, } },
-    'postcss-loader'
-  ],
-  sideEffects: true,
-}
 
 module.exports = merge(common, {
   mode: 'production',
