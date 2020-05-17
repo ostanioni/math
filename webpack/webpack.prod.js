@@ -15,7 +15,7 @@ const CONTEXT = path.resolve(__dirname, '../');
 
 /***___SCSS_LOADER_WITHOUT_SOURCE_MAP__ ***/
 const SCSS = {
-  test: /\.scss$/,
+  test: /\.s[ac]ss$/,
   use: [
     MiniCssExtractPlugin.loader,
     { loader: 'css-loader',     options: { sourceMap: $SOURCE_MAP, importLoaders: 2, } },
@@ -42,30 +42,6 @@ module.exports = merge(common, {
     rules: [ SCSS, CSS ]
   },
   plugins: [
-    new TerserPlugin({
-      terserOptions: {
-        parse: {
-         ecma: 8,
-        },
-        compress: {
-          ecma: 5,
-          warnings: false,
-          comparisons: false,
-          inline: 2,
-        },
-        mangle: {
-          safari10: true,
-        },
-        output: {
-          ecma: 5,
-          comments: false,
-          ascii_only: true,
-        },
-      },
-      parallel: true,
-      cache: true,
-      sourceMap: $SOURCE_MAP,
-    }),
     new MiniCssExtractPlugin({
         cssProcessorOptions: {
           parser: safePostCssParser,
@@ -92,8 +68,48 @@ module.exports = merge(common, {
     // }),
   ],
   optimization: {
+    minimize: true,
     minimizer: [
-      new OptimizeCSSAssetsPlugin({})
+      // new OptimizeCSSAssetsPlugin({}),
+      new TerserPlugin({
+        terserOptions: {
+          ecma: 11,
+          warnings: false,
+          parse: {
+            ecma: 11
+          },
+          compress: {
+            ecma: 6,
+            warnings: false,
+            comparisons: false,
+            inline: 2
+          },
+          mangle: true, // Note `mangle.properties` is `false` by default.
+          module: false,
+          output: {
+            ecma: 6, 
+            comments: false, 
+            ascii_only: true, 
+          },
+          toplevel: false,
+          nameCache: null,
+          ie8: false,
+          keep_classnames: undefined,
+          keep_fnames: false,
+          safari10: false,
+          parallel: true,
+          toplevel: false,
+          cache: true,
+          cacheKeys: (defaultCacheKeys, file) => {
+            defaultCacheKeys.myCacheKey = 'myCacheKeyValue';
+            return defaultCacheKeys;
+          },
+          sourceMap: false,
+          extractComments: false,
+          // mangle: { safari10: true, },
+        },
+      }), 
+
     ],
     splitChunks: {
       chunks: 'all', // 'async'

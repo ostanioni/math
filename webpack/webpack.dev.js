@@ -19,7 +19,7 @@ const JS_SOURCE_MAP = {
 /***___SCSS_SYNTAX___ ***/
 const SCSS_SYNTAX = {
   enforce: "pre",
-  test: /\.scss$/,
+  test: /\.s[ac]ss$/,
   exclude: /node_modules/,
   use: [
     { loader: 'postcss-loader',
@@ -31,29 +31,9 @@ const SCSS_SYNTAX = {
   ]
 };
 
-/***___SCSS_SOURCE_MAP__ ***/
-const SCSS_SOURCE_MAP = {
-  test: /\.scss$/,
-  use: [
-    { loader: 'style-loader',   options: { sourceMap: true, } },
-    { loader: 'css-loader',     options: { sourceMap: true, importLoaders: 2, } },
-    'postcss-loader',
-    { loader: 'sass-loader',    options: { sourceMap: true, importLoaders: 0, } },
-  ],
-  sideEffects: true,
-}
 
-/***___CSS_LOADER___***/
-const CSS_SOURCE_MAP = {
-  test: /\.css$/,
-  use: [
-    { loader: 'style-loader',   options: { sourceMap: true, } },
-    'astroturf/css-loader',
-    { loader: 'css-loader',     options: { sourceMap: true, importLoaders: 1, } },
-    'postcss-loader',
-  ],
-  sideEffects: true,
-}
+
+
 
 module.exports = merge(common, {
   mode: 'development',
@@ -66,7 +46,7 @@ module.exports = merge(common, {
   },
   devtool: 'cheap-module-source-map', // 'source-map',
   module: {
-    rules: [ JS_SOURCE_MAP, SCSS_SYNTAX, SCSS_SOURCE_MAP, CSS_SOURCE_MAP ]
+    rules: [ JS_SOURCE_MAP, SCSS_SYNTAX, CSS_SOURCE_MAP ]
   },
   optimization: {
     minimize: false,

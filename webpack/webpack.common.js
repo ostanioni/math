@@ -1,11 +1,24 @@
 /* eslint-disable */ 
 /*tslint:disabled*/
+const path = require('path');
+const webpack = require('webpack');
+const HtmlPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+/*_____________COMMON_VARIABLES_______________ */
+const devMode = process.env.NODE_ENV !== 'production'
+const $SOURCE_MAP = devMode ? true : false
+/*_____________CONTEXT_______________ */
+const CONTEXT = path.resolve(__dirname, '../');
+const ASSET_PATH = process.env.ASSET_PATH || '/';
+/* __________ENTRY__POINT_____________*/
+const $ENTRY = './src/index.ts'
+
 /*****************************__COMMON_LOADERS__*****************************************/
 /***___BABEL_LOADER___ ***/
 const BABEL = { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" };
 /***___TSX_LOADER___***/
 // const TSX = { test: /\.tsx$/, loader: "awesome-typescript-loader" };
-
 /***___IMAGES_LOADER___***/
 const IMAGES = { test: /\.(png|svg|jpg|gif)$/,  use: [ { loader: 'file-loader', /*exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],*/ options: { name(file) { if (process.env.NODE_ENV === 'development') { return 'imgs/[path][name].[ext]'; } return 'imgs/[hash].[ext]';},},},]};
 /***___WORKER_LOADER___***/
@@ -30,17 +43,41 @@ const RAW = { test: /\.txt$/i, use: 'raw-loader'};
 //   test: require.resolve('snapsvg/dist/snap.svg.js'),
 //   use: 'imports-loader?this=>window,fix=>module.exports=0',
 // }
-  
-const path = require('path');
-const webpack = require('webpack');
-const HtmlPlugin = require('html-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
+/***___SCSS_SOURCE_MAP__ ***/
+const $STYLE_LOADER = { loader: 'style-loader', options: { sourceMap: true, } }
+const $MINI_CSS_LOADER = MiniCssExtractPlugin.loader
+const $STYLE_LOADER_OR_MINI_CSS_LOADER = devMode ? $STYLE_LOADER : $MINI_CSS_LOADER
 
-/*_____________CONTEXT_______________ */
-const CONTEXT = path.resolve(__dirname, '../');
-const ASSET_PATH = process.env.ASSET_PATH || '/';
-/* __________ENTRY__POINT_____________*/
-const $ENTRY = './src/index.ts'
+const SCSS = {
+  test: /\.s[ac]ss$/,
+  use: [
+    $STYLE_LOADER_OR_MINI_CSS_LOADER,
+    { loader: 'css-loader', options: { sourceMap: $SOURCE_MAP, importLoaders: 2, } },
+    'postcss-loader',
+    { loader: 'sass-loader',    
+        options: { 
+          sourceMap: $SOURCE_MAP,
+          implementation: require('sass'), 
+          importLoaders: 0,
+          sassOptions:{
+            indentWidth: 2,
+            fiber: require('fibers'),
+          }
+        } 
+    },
+  ],
+  sideEffects: true,
+}
+/***___CSS_LOADER___***/
+const CSS = {
+  test: /\.css$/,
+  use: [
+    $STYLE_LOADER_OR_MINI_CSS_LOADER,
+    { loader: 'css-loader',     options: { sourceMap: $SOURCE_MAP, importLoaders: 1, } },
+    'postcss-loader',
+  ],
+  sideEffects: true,
+}
 
 module.exports = {
   context: CONTEXT,
@@ -75,9 +112,13 @@ module.exports = {
     },
   },
   module: {
-    rules: [ TS, BABEL, FONT, IMAGES, MD, RAW]
+    rules: [ TS, BABEL, FONT, IMAGES, MD, RAW, SCSS, CSS]
   },
   plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[hash].css', // [name]
+      chunkFilename: '[id].css',
+    }),
     new HtmlPlugin({
       inject: true,
       template: `${CONTEXT}/public/index.html`,
