@@ -1,10 +1,11 @@
 # Typescript 3.9.2
 
 + Webpack 4.43 + Webpack-dev-server 3.11
-+ ESLint 7.0
 + Babel 7.9.6
-+ SCSS (SASS), PostCSS, Stylelint 13.4
++ ESLint 7.0
 + Prettier 2.0.2
++ SCSS (SASS), PostCSS, Stylelint 13.4
+
 
 # Available Scripts:
 ## Installation
@@ -15,7 +16,7 @@
 ### `npm run dev`
 
 Runs the app in the development mode.<br>
-The application will run automatically in the browser at `[http://127.0.0.1:3001]`.
+The application will run automatically in the browser at `[http://127.0.0.7:3001]`.
 
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
