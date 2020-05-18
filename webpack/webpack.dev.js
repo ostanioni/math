@@ -3,7 +3,7 @@
 
 const merge   = require('webpack-merge');
 const common  = require('./webpack.common.js');
-// const webpack = require('webpack');
+const webpack = require('webpack');
 const path    = require('path');
 
 // const CONTEXT = path.resolve(__dirname, '../');
@@ -32,7 +32,12 @@ module.exports = merge(common, {
   optimization: {
     minimize: false,
     usedExports: true
-  }
+  },
+  plugins:[
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('development'),
+    }),
+  ],
 });
 
 /*

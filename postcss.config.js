@@ -20,6 +20,6 @@ module.exports = {
       'color-mod-function': { unresolved: 'warn', }
       }
     }),
-    require('cssnano')( {"preset": ["advanced", { "discardComments": {"removeAll": true,} }], } ),
+    // require('cssnano')( {"preset": ["advanced", { "discardComments": {"removeAll": true,} }], } ),
   ],  
 }

@@ -5,6 +5,7 @@ const common = require('./webpack.common.js');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserPlugin = require('terser-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+const webpack = require('webpack');
 // const {GenerateSW} = require('workbox-webpack-plugin');
 const path = require('path');
 
@@ -14,6 +15,9 @@ module.exports = merge(common, {
   mode: 'production',
   module: { },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production'),
+    }),
     new CompressionPlugin({
       test: /\.js(\?.*)?$/i,
       algorithm: 'gzip',

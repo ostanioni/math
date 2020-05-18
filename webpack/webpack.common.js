@@ -70,17 +70,19 @@ const $MINI_CSS_LOADER = {
   loader: MiniCssExtractPlugin.loader, 
   options: {
     publicPath: './css',
-    assetPath: ASSET_PATH + '/css',
+    assetPath: '../css',
     hmr: devMode,
     reloadAll: true,
   } 
 }
 const $STYLE_LOADER_OR_MINI_CSS_LOADER = devMode ? $STYLE_LOADER : $MINI_CSS_LOADER;
 /***___SCSS_CSS___ ***/
-const SCSS_CSS = {
+const SCSS = {
   test: /\.((c|sa|sc)ss)$/i,
+  enforce: "post",
   use: [
-    $STYLE_LOADER_OR_MINI_CSS_LOADER,
+    // $STYLE_LOADER_OR_MINI_CSS_LOADER,
+    $STYLE_LOADER,
     { 
       // Run `postcss-loader` on each CSS `@import`, do not forget that `sass-loader` compile non CSS `@import`'s into a single file
       // If you need run `sass-loader` and `postcss-loader` on each CSS `@import` please set it to `2`
@@ -90,14 +92,15 @@ const SCSS_CSS = {
         importLoaders: 2,
       } 
     },
-    'postcss-loader',
+    // 'postcss-loader',
     { 
       loader: 'sass-loader',    
         options: { 
           sourceMap: $SOURCE_MAP,
-          implementation: require('sass'), 
+          implementation: require('node-sass'), 
           // importLoaders: 0,
           sassOptions:{
+            outputStyle: 'compressed',
             indentWidth: 2,
             fiber: require('fibers'),
           }
@@ -138,7 +141,7 @@ module.exports = {
     },
   },
   module: {
-    rules: [ TS, BABEL, FONT, IMAGES, MD, SCSS_CSS]
+    rules: [ TS, BABEL, FONT, IMAGES, MD, SCSS_SYNTAX, SCSS ]
   },
   plugins: [
     new MiniCssExtractPlugin({
@@ -146,8 +149,9 @@ module.exports = {
         parser: safePostCssParser,
         map: $SOURCE_MAP,
       },
-      filename: `${CONTEXT}/css/[contenthash].css`, // [name]
-      chunkFilename: `${CONTEXT}/css/[contenthash].[id].css`,
+      filename: `${CONTEXT}/dist/css/[contenthash].css`, // [name]
+      chunkFilename: `${CONTEXT}/dist/css/[contenthash].[id].css`,
+      publicPath: './css',
     }),
     new HtmlPlugin({
       inject: true,
