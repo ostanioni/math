@@ -2,32 +2,21 @@
 /*tslint:disabled*/
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const safePostCssParser = require('postcss-safe-parser');
 const TerserPlugin = require('terser-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
-const {GenerateSW} = require('workbox-webpack-plugin');
+// const {GenerateSW} = require('workbox-webpack-plugin');
 const path = require('path');
 
 const CONTEXT = path.resolve(__dirname, '../');
 
 module.exports = merge(common, {
   mode: 'production',
-  module: {
-    rules: [ SCSS, CSS ]
-  },
+  module: { },
   plugins: [
-    new MiniCssExtractPlugin({
-        cssProcessorOptions: {
-          parser: safePostCssParser,
-          map: $SOURCE_MAP,
-        },
-        filename: 'css/[contenthash].css',
-        chunkFilename: 'css/[contenthash].[id].css',
-    }),
     new CompressionPlugin({
-      algorithm: 'gzip'
+      test: /\.js(\?.*)?$/i,
+      algorithm: 'gzip',
     }),
     // GenerateSW({
     //   clientsClaim: true,

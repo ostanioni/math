@@ -1,22 +1,30 @@
 /* eslint-disable */ 
 /*tslint:disabled*/
 //import path from 'path';
-import webpack from 'webpack';
-import HtmlPlugin from 'html-webpack-plugin';
-import CopyPlugin from 'copy-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+// import webpack from 'webpack';
+const HtmlPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const safePostCssParser = require('postcss-safe-parser');
+const path = require('path');
 /*_____________COMMON_VARIABLES_______________ */
 const devMode = process.env.NODE_ENV !== 'production'
 const $SOURCE_MAP = devMode ? true : false
 /*_____________CONTEXT_______________ */
-const CONTEXT = __dirname + '../';
-const ASSET_PATH = process.env.ASSET_PATH || CONTEXT;
+const CONTEXT = path.resolve(__dirname, '../');
+const ASSET_PATH = process.env.ASSET_PATH || path.resolve(CONTEXT, 'dist');;
 /* __________ENTRY__POINT_____________*/
 const $ENTRY = './src/index.ts'
 
 /*****************************__COMMON_LOADERS__*****************************************/
+/***___TS_LOADER___***/
+const TS = { test: /\.ts$/, loader: "ts-loader", exclude: [path.resolve(CONTEXT, 'node_modules')] };
 /***___BABEL_LOADER___ ***/
-const BABEL = { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" };
+const BABEL = { 
+  test: /\.js$/, 
+  exclude: [path.resolve(CONTEXT, 'node_modules')], 
+  loader: 'babel-loader',
+};
 /***___TSX_LOADER___***/
 // const TSX = { test: /\.tsx$/, loader: "awesome-typescript-loader" };
 /***___IMAGES_LOADER___***/
@@ -33,7 +41,7 @@ const FONT = { test: /\.(woff|woff2|eot|ttf|otf)$/, use: [ 'file-loader' ] };
 const MD = { test: /\.md$/, use: [{ loader: "raw-loader" }, { loader: "markdown-loader", options: { } }] };
 // const MD = { test: /\.md$/, use: [{ loader: "html-loader" }, { loader: "markdown-loader", options: { } }] };
 /***__RAW_LOADER___***/
-const RAW = { test: /\.txt$/i, use: 'raw-loader'};
+// const RAW = { test: /\.txt$/i, use: 'raw-loader'};
 /***__HTML_LOADER___***/
 // const HTML = { test: /\.(html)$/, use: { loader: 'html-loader', options: { attrs: [':data-src'] } }};
 /***__ESLINT_LOADER___***/
@@ -54,15 +62,20 @@ const SCSS_SYNTAX = {
   ]
 };
 /***___SCSS_CSS_PARAMETERS__ ***/
-const $STYLE_LOADER = { loader: 'style-loader', options: { sourceMap: true, } }
+const $STYLE_LOADER = { 
+  loader: 'style-loader', 
+  options: { injectType: 'styleTag' } // styleTag singletonStyleTag lazyStyleTag lazySingletonStyleTag linkTag
+}
 const $MINI_CSS_LOADER = { 
   loader: MiniCssExtractPlugin.loader, 
   options: {
-    //publicPath: `${CONTEXT}/dist`,
+    publicPath: './css',
+    assetPath: ASSET_PATH + '/css',
     hmr: devMode,
+    reloadAll: true,
   } 
 }
-const $STYLE_LOADER_OR_MINI_CSS_LOADER = devMode ? $STYLE_LOADER : $MINI_CSS_LOADER
+const $STYLE_LOADER_OR_MINI_CSS_LOADER = devMode ? $STYLE_LOADER : $MINI_CSS_LOADER;
 /***___SCSS_CSS___ ***/
 const SCSS_CSS = {
   test: /\.((c|sa|sc)ss)$/i,
@@ -79,12 +92,11 @@ const SCSS_CSS = {
     },
     'postcss-loader',
     { 
-      test: /\.s[ac]ss$/i,
       loader: 'sass-loader',    
         options: { 
           sourceMap: $SOURCE_MAP,
           implementation: require('sass'), 
-          importLoaders: 0,
+          // importLoaders: 0,
           sassOptions:{
             indentWidth: 2,
             fiber: require('fibers'),
@@ -102,8 +114,8 @@ module.exports = {
   },
   output: {
     filename: '[hash].js',
-    path: `${CONTEXT}/dist`,
-    // publicPath: `${CONTEXT}`,
+    path: `${CONTEXT}/dist/js`,
+    publicPath: './js',
   },
   resolve: {
     extensions: [ 'ts', '.js', '.json' ],
@@ -126,7 +138,7 @@ module.exports = {
     },
   },
   module: {
-    rules: [ TS, BABEL, FONT, IMAGES, MD, RAW, SCSS_CSS]
+    rules: [ TS, BABEL, FONT, IMAGES, MD, SCSS_CSS]
   },
   plugins: [
     new MiniCssExtractPlugin({
@@ -134,12 +146,13 @@ module.exports = {
         parser: safePostCssParser,
         map: $SOURCE_MAP,
       },
-      filename: 'css/[contenthash].css', // [name]
-      chunkFilename: 'css/[contenthash].[id].css',
+      filename: `${CONTEXT}/css/[contenthash].css`, // [name]
+      chunkFilename: `${CONTEXT}/css/[contenthash].[id].css`,
     }),
     new HtmlPlugin({
       inject: true,
       template: `${CONTEXT}/public/index.html`,
+      filename: `${CONTEXT}/dist/index.html`,
       minify: {
         removeComments: true,
         collapseWhitespace: true,
@@ -148,35 +161,51 @@ module.exports = {
         removeEmptyAttributes: true,
         removeStyleLinkTypeAttributes: true,
         keepClosingSlash: true,
-        minifyJS: true,
-        minifyCSS: true,
-        minifyURLs: true,
+        // minifyJS: true,
+        // minifyCSS: true,
+        // minifyURLs: true,
       }
     }),
     new CopyPlugin({
       patterns:[
         { 
           from: 'public/imgs',
-          to: '../dist/imgs',  
+          to: '../imgs',  
           // [name].[ext]',
           toType: 'dir',
-          force: true,
-          context: `${CONTEXT}`
+          force: false,
+          // context: `${CONTEXT}`
         },
         { 
           from: 'public/workers',
-          to: '../dist/workers',  
+          to: '../workers',  
           // [name].[ext]',
           toType: 'dir',
-          force: true,
+          force: false,
           context: `${CONTEXT}`
         },
         { 
           from: 'public/resources',
-          to: '../dist/resources',  
+          to: '../resources',  
           // [name].[ext]',
           toType: 'dir',
-          force: true,
+          force: false,
+          context: `${CONTEXT}`
+        },
+        { 
+          from: 'public/js',
+          to: '../js',  
+          // [name].[ext]',
+          toType: 'dir',
+          force: false,
+          context: `${CONTEXT}`
+        },
+        { 
+          from: 'public/css',
+          to: '../css',  
+          // [name].[ext]',
+          toType: 'dir',
+          force: false,
           context: `${CONTEXT}`
         },
       ],
