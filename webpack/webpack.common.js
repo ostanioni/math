@@ -1,6 +1,6 @@
 /* eslint-disable */ 
 /*tslint:disabled*/
-import path from 'path';
+//import path from 'path';
 import webpack from 'webpack';
 import HtmlPlugin from 'html-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
@@ -9,8 +9,8 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 const devMode = process.env.NODE_ENV !== 'production'
 const $SOURCE_MAP = devMode ? true : false
 /*_____________CONTEXT_______________ */
-const CONTEXT = path.resolve(__dirname, '../');
-const ASSET_PATH = process.env.ASSET_PATH || '/';
+const CONTEXT = __dirname + '../';
+const ASSET_PATH = process.env.ASSET_PATH || CONTEXT;
 /* __________ENTRY__POINT_____________*/
 const $ENTRY = './src/index.ts'
 
@@ -58,7 +58,7 @@ const $STYLE_LOADER = { loader: 'style-loader', options: { sourceMap: true, } }
 const $MINI_CSS_LOADER = { 
   loader: MiniCssExtractPlugin.loader, 
   options: {
-    publicPath: `${CONTEXT}/dist`,
+    //publicPath: `${CONTEXT}/dist`,
     hmr: devMode,
   } 
 }
@@ -103,7 +103,7 @@ module.exports = {
   output: {
     filename: '[hash].js',
     path: `${CONTEXT}/dist`,
-    publicPath: `${CONTEXT}`,
+    // publicPath: `${CONTEXT}`,
   },
   resolve: {
     extensions: [ 'ts', '.js', '.json' ],
