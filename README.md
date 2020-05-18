@@ -1,8 +1,9 @@
 # Typescript 3.9.2
 
-+ Webpack 4.43
++ Webpack 4.43 + Webpack-dev-server 3.11
 + ESLint 7.0
 + Babel 7.9.6
++ SCSS (SASS), PostCSS, Stylelint 13.4
 + Prettier 2.0.2
 
 # Available Scripts:
