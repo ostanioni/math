@@ -219,3 +219,13 @@ module.exports = {
     })
   ]
 };
+/*
+{
+      loader: 'file-loader',
+      options: {
+        name: '[name].[ext]',
+        publicPath: 'fonts/',
+        outputPath: 'fonts/'
+      }
+    }
+*/
