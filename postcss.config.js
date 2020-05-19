@@ -23,3 +23,9 @@ module.exports = {
     // require('cssnano')( {"preset": ["advanced", { "discardComments": {"removeAll": true,} }], } ),
   ],  
 }
+/*
+"postcss": 
+"postcss --no-map --use autoprefixer < css/style$VERSION.css | postcss --no-map --use cssnano > css/style$VERSION.min.css",
+"scss": "node-sass scss/style.scss --output-style expanded --indent-type space --indent-size 2 --include-path './node_modules' --source-map-root file://${PWD}/ --source-map-embed true -q > css/style$VERSION.css",
+"scss:watch": "onchange 'scss/*.*' -- npm run scss",
+"css:build": "npm run scss -s && npm run postcss -s",
