@@ -8,10 +8,14 @@ module.exports = {
   sourceMap: $SOURCEMAP,
   // importLoaders: 1,
   // postcssNormalize(),
+  parser: 'postcss-scss',
+  syntax: 'postcss-scss',
   ident: 'postcss',
   plugins: [
     require('postcss-import')(),
+    require('postcss-strip-inline-comments')(),
     require('postcss-flexbugs-fixes')(),
+    require('autoprefixer')(),
     require('postcss-preset-env')({
       stage: 3,
       autoprefixer: { flexbox: 'no-2009', grid: true, },
