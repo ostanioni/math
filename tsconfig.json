@@ -7,13 +7,13 @@
     "noImplicitReturns": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "noUnusedParameters":true,
+    "noUnusedParameters": true,
     "noUnusedLocals": true,
     "resolveJsonModule": true,
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "sourceMap": false,
+    "sourceMap": true,
     "noEmit": false,
     "charset": "utf8",
     "locale": "ru",
@@ -24,17 +24,12 @@
     "preserveConstEnums": false,
     "outDir": "./dist/ts",
     "pretty": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "scripthost",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "scripthost", "esnext"],
     "baseUrl": "./src",
-    "paths":{
-      "components":["/components"],
-      "themes":["/themes"],
-      "styles":["/styles"]
+    "paths": {
+      "components": ["/components"],
+      "themes": ["/themes"],
+      "styles": ["/styles"]
     }
   },
   "plugins": [
@@ -45,18 +40,10 @@
         "css",
         "injectGlobal",
         "createGlobalStyle",
-        "keyframes" 
+        "keyframes"
       ]
     }
   ],
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts",
-    "dist",
-    "public",
-    ".vscode"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts", "dist", "public", ".vscode"]
 }
