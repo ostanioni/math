@@ -15,5 +15,7 @@
       "**/*.js": { "when": "$(basename).ts" },
      "**/**.js": { "when": "$(basename).tsx" },
     "**/**.jsx": { "when": "$(basename).tsx" }
-  }
+  },
+  "versionlens.suggestions.showOnStartup": true,
+  "versionlens.suggestions.showPrereleasesOnStartup": true
 }
