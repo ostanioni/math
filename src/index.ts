@@ -1,4 +1,5 @@
-import './app.css';
+//import './app.css';
+//import './app.scss';
 function hello(msg: string): void {
   console.log(msg);
 }
