@@ -1,10 +1,10 @@
 /* eslint-disable */
 /*tslint:disabled*/
 
-const merge   = require('webpack-merge');
-const common  = require('./webpack.common.js');
+const merge = require('webpack-merge');
+const common = require('./webpack.common.js');
 const webpack = require('webpack');
-const path    = require('path');
+const path = require('path');
 
 // const CONTEXT = path.resolve(__dirname, '../');
 // const SRC = `${CONTEXT}/src`
@@ -13,8 +13,8 @@ const path    = require('path');
 const JS_SOURCE_MAP = {
   enforce: 'pre',
   test: /\.js$/,
-  loader: "source-map-loader"
-}
+  loader: 'source-map-loader',
+};
 
 module.exports = merge(common, {
   mode: 'development',
@@ -23,17 +23,17 @@ module.exports = merge(common, {
     contentBase: './dist',
     hot: true,
     host: '127.0.0.7',
-    port: 3001
+    port: 3001,
   },
   devtool: 'inline-source-map', // 'cheap-module-source-map', 'source-map',
   module: {
-    rules: [ JS_SOURCE_MAP ]
+    rules: [JS_SOURCE_MAP],
   },
   optimization: {
     minimize: false,
-    usedExports: true
+    usedExports: true,
   },
-  plugins:[
+  plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development'),
     }),
