@@ -1,0 +1,49 @@
+{
+  "plugins": ["stylelint-scss", "stylelint-order"],
+  "extends": [
+    "stylelint-config-sass-guidelines",
+    "stylelint-config-recommended"
+  ],
+  "rules": {
+    "at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": ["extends"]
+      }
+    ],
+
+    "block-no-empty": true,
+    "block-opening-brace-space-before": "always",
+
+    "color-hex-case": "lower",
+    "color-hex-length": "long",
+    "color-named": "never",
+    "color-no-invalid-hex": true,
+
+    "declaration-bang-space-after": "never",
+    "declaration-bang-space-before": "always",
+    "declaration-colon-space-after": "always",
+    "declaration-colon-space-before": "never",
+    "declaration-block-semicolon-space-before": "never",
+    "declaration-block-single-line-max-declarations": 1,
+    "declaration-block-trailing-semicolon": "always",
+
+    "function-comma-space-after": "never-single-line",
+    "function-parentheses-space-inside": "never-single-line",
+    "function-url-quotes": "always",
+
+    "media-feature-name-no-vendor-prefix": true,
+
+    "indentation": 2,
+    "length-zero-no-unit": null,
+    "max-nesting-depth": 2,
+
+    "number-leading-zero": "always",
+    "number-no-trailing-zeros": true,
+    "property-no-vendor-prefix": true,
+    "shorthand-property-no-redundant-values": true,
+
+    "string-quotes": "double",
+    "value-no-vendor-prefix": true
+  }
+}
