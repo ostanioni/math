@@ -2,7 +2,8 @@
   "plugins": ["stylelint-scss", "stylelint-order"],
   "extends": [
     "stylelint-config-sass-guidelines",
-    "stylelint-config-recommended"
+    "stylelint-config-recommended",
+    "stylelint-config-idiomatic-order"
   ],
   "rules": {
     "at-rule-no-unknown": [
