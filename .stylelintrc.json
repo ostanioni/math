@@ -1,14 +1,11 @@
 {
   "plugins": ["stylelint-order"],
-  "extends": [
-    "stylelint-config-recommended",
-    "stylelint-config-idiomatic-order"
-  ],
+  "extends": ["stylelint-config-standart", "stylelint-config-idiomatic-order"],
   "rules": {
     "at-rule-no-unknown": [
       true,
       {
-        "ignoreAtRules": ["extends"]
+        "ignoreAtRules": ["extends", "ignores"]
       }
     ],
 
@@ -22,28 +19,38 @@
 
     "declaration-bang-space-after": "never",
     "declaration-bang-space-before": "always",
-    "declaration-colon-space-after": "always",
+    "declaration-colon-space-after": "always-single-line",
     "declaration-colon-space-before": "never",
     "declaration-block-semicolon-space-before": "never",
     "declaration-block-single-line-max-declarations": 1,
     "declaration-block-trailing-semicolon": "always",
 
-    "function-comma-space-after": "never-single-line",
-    "function-parentheses-space-inside": "never-single-line",
+    "function-comma-space-after": "never",
+    "function-parentheses-space-inside": "never",
     "function-url-quotes": "always",
 
     "media-feature-name-no-vendor-prefix": true,
 
-    "indentation": 2,
+    "indentation": [
+      2,
+      {
+        "except": ["value"],
+        "severity": "warning"
+      }
+    ],
     "length-zero-no-unit": null,
     "max-nesting-depth": 2,
 
     "number-leading-zero": "always",
     "number-no-trailing-zeros": true,
     "property-no-vendor-prefix": true,
-    "shorthand-property-no-redundant-values": true,
 
+    "shorthand-property-no-redundant-values": true,
+    "selector-no-vendor-prefix": true,
+    "selector-pseudo-element-colon-notation": "double",
     "string-quotes": "double",
+    "selector-pseudo-element-no-unknown": true,
+
     "value-no-vendor-prefix": true
   }
 }
